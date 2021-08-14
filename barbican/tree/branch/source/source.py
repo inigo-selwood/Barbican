@@ -5,4 +5,13 @@ class Source:
         self.includes = []
 
     def __str__(self):
-        return f'{self.name}{self.extension}'
+        if not self.includes:
+            return ''
+
+        print(': ', end = '')
+        include_count = len(self.includes)
+        for index in range(include_count):
+            include = self.includes[index]
+            print(f'{include}', end=', ' if (index + 1) < include_count else '')
+
+        return ''
