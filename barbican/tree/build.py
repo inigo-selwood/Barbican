@@ -5,4 +5,4 @@ from tree.get_base import get_base
 
 
 def build(path: str = get_base()):
-    return build_branch(path, 0)
+    return build_branch(path, '.', 0)
