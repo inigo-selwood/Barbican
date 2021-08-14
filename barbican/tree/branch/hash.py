@@ -8,6 +8,8 @@ def hash(branch: Branch):
         hashes.append(branch_.hash)
     for hash in branch.sources:
         hashes.append(hash)
+    for hash in branch.headers:
+        hashes.append(hash)
     hashes = sorted(hashes)
 
     branch_hash = hashlib.shake_256()

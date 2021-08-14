@@ -20,13 +20,15 @@ def build(path: str, depth: int):
     branch.path = path
     branch.depth = depth
 
-    source_extensions = ['.hpp', '.hh', '.h', '.cpp', '.cc', '.c']
+    header_extensions = ['.hpp', '.hh', '.h']
+    source_extensions = ['.cpp', '.cc', '.c']
     for file_name in files:
         name, extension = os.path.splitext(file_name)
-        if extension not in source_extensions:
-            continue
-
-        branch.sources[file_name] = build_source(path, file_name)
+        
+        if extension in source_extensions:
+            branch.sources[file_name] = build_source(path, file_name)
+        elif extension in header_extensions:
+            branch.headers[file_name] = build_source(path, file_name)
 
     new_depth = depth + 1
     for directory in directories:

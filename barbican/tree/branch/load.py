@@ -21,6 +21,13 @@ def load(path: str, depth: int):
 
         branch.sources[name] = source
 
+    for name, header_ in values['headers'].items():
+        header = Source()
+        header.hash = header_['hash']
+        header.includes = header_['includes']
+
+        branch.headers[name] = header
+
     for name, hash in values['branches'].items():
         absolute_path = os.path.join(path, name)
         branch_ = load(absolute_path, depth + 1)

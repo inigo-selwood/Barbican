@@ -13,7 +13,14 @@ def save(branch: Branch, path: str):
     for name, source in branch.sources.items():
         sources[name] = {
             'hash': source.hash,
-            'includes': source.includes    
+            'includes': source.includes
+        }
+
+    headers = {}
+    for name, header in branch.headers.items():
+        headers[name] = {
+            'hash': header.hash,
+            'includes': header.includes
         }
 
     branches = {}
@@ -27,6 +34,7 @@ def save(branch: Branch, path: str):
     branch_data = {
         'path': branch.path,
         'branches': branches,
+        'headers': headers,
         'sources': sources
     }
 
