@@ -2,6 +2,7 @@ import hashlib
 
 from tree.branch.branch import Branch
 
+
 def hash(branch: Branch):
     hashes = []
     for branch_ in branch.branches.values():

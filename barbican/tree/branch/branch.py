@@ -1,6 +1,7 @@
 from tree.branch.source.source import Source
 from tree.status.status import Status
 
+
 class Branch:
 
     def __init__(self):

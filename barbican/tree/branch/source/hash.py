@@ -1,5 +1,6 @@
 import hashlib
 
+
 def hash(file: str) -> str:
 
     BLOCK_SIZE = 65536

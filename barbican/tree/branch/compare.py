@@ -3,6 +3,7 @@ from typing import Dict
 from tree.branch.branch import Branch
 from tree.status.status import Status
 
+
 def _compare_files(old: Dict, new: Dict):
     result = new.copy()
 
@@ -69,7 +70,6 @@ def _compare_branches(old: Dict, new: Dict):
         dirty = dirty or not clean
 
     return dirty, result
-
 
 
 def compare(old: Branch, new: Branch):

@@ -4,6 +4,7 @@ import yaml
 from tree.branch.source.source import Source
 from tree.branch.branch import Branch
 
+
 def load(path: str, depth: int):
     branch_file_name = os.path.join(path, '.branch')
     branch_file = open(branch_file_name, 'r')

@@ -2,6 +2,7 @@ from tree.branch.source.print import print_ as print_source
 from tree.branch.branch import Branch
 from tree.status.status import Status
 
+
 def print_(branch: Branch, leader: str = '', starter: str = ''):
 
     print(starter, end='')

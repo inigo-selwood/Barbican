@@ -7,6 +7,7 @@ from tree.save import save as save_tree
 from tree.compare import compare as compare_tree
 from tree.branch.print import print_ as print_tree
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('command')
 args = parser.parse_args()
