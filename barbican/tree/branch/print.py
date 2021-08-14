@@ -5,8 +5,9 @@ from tree.status.status import Status
 
 def print_(branch: Branch, leader: str = '', starter: str = ''):
 
+    # Print the tree-structure starter, and a little hint to show the branch's
+    # status
     print(starter, end='')
-
     if branch.status == Status.ADDED:
         print('+ ', end='')
     elif branch.status == Status.REMOVED:
@@ -16,6 +17,7 @@ def print_(branch: Branch, leader: str = '', starter: str = ''):
 
     print(branch.name)
 
+    # Print sub-branches first
     branch_index = 0
     branch_count = len(branch.branches)
     file_count = len(branch.headers) + len(branch.sources)
@@ -29,20 +31,16 @@ def print_(branch: Branch, leader: str = '', starter: str = ''):
         print_(branch_, f'{leader}{extension}', f'{leader}{starter}')
         branch_index += 1
 
+    # Print header files next
     file_index = 0
     for _, header in sorted(branch.headers.items()):
-        extension = '├── '
-        if (file_index + 1) == file_count:
-            extension = '└── '
-
+        extension = '└── ' if (file_index + 1) == file_count else '├── '
         print_source(header, f'{leader}{extension}')
         file_index += 1
 
+    # Print source files last
     for _, source in sorted(branch.sources.items()):
-        extension = '├── '
-        if (file_index + 1) == file_count:
-            extension = '└── '
-
+        extension = '└── ' if (file_index + 1) == file_count else '├── '
         print_source(source, f'{leader}{extension}')
         file_index += 1
 

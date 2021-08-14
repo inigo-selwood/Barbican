@@ -6,9 +6,11 @@ from tree.branch.branch import Branch
 
 def save(branch: Branch, path: str):
 
+    # Check the directory exists
     if not os.path.exists(path):
         os.mkdir(path)
 
+    # Serialize sources
     sources = {}
     for name, source in branch.sources.items():
         sources[name] = {
@@ -16,6 +18,7 @@ def save(branch: Branch, path: str):
             'includes': source.includes
         }
 
+    # Serialize header files
     headers = {}
     for name, header in branch.headers.items():
         headers[name] = {
@@ -23,6 +26,7 @@ def save(branch: Branch, path: str):
             'includes': header.includes
         }
 
+    # Serialize branches
     branches = {}
     for name, branch_ in branch.branches.items():
         branches[name] = branch_.hash
@@ -31,6 +35,7 @@ def save(branch: Branch, path: str):
         new_path = os.path.join(path, name)
         save(branch_, new_path)
 
+    # Put the packet together, encode it as yaml, and write it to file
     branch_data = {
         'name': branch.name,
         'path': branch.path,
@@ -38,7 +43,7 @@ def save(branch: Branch, path: str):
         'headers': headers,
         'sources': sources
     }
-
+    
     absolute_path = os.path.join(path, '.branch')
     with open(absolute_path, 'w') as branch_file:
         yaml.dump(branch_data, branch_file)
