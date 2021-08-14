@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from tree.build import build as build_tree
 from tree.load import load as load_tree
@@ -24,6 +25,9 @@ elif args.command == 'compare':
     new_tree = build_tree()
     result = compare_tree(old_tree, new_tree)
     print_tree(result)
+
+elif args.command == 'create':
+    os.mkdir(os.path.join(os.getcwd(), '.barbican'))
 
 else:
     raise Exception(f"unrecognized command: '{args.command}'")
