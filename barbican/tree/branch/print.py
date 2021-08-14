@@ -30,17 +30,17 @@ def print_(branch: Branch, leader: str = '', starter: str = ''):
 
     file_index = 0
     for _, header in sorted(branch.headers.items()):
-        extension = '├──'
+        extension = '├── '
         if (file_index + 1) == file_count:
-            extension = '└──'
+            extension = '└── '
 
         print_source(header, f'{leader}{extension}')
         file_index += 1
 
     for _, source in sorted(branch.sources.items()):
-        extension = '├──'
+        extension = '├── '
         if (file_index + 1) == file_count:
-            extension = '└──'
+            extension = '└── '
 
         print_source(source, f'{leader}{extension}')
         file_index += 1
