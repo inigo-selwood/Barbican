@@ -17,6 +17,7 @@ def load(path: str, depth: int):
 
     for name, source_ in values['sources'].items():
         source = Source()
+        source.name = name
         source.hash = source_['hash']
         source.includes = source_['includes']
 
@@ -24,6 +25,7 @@ def load(path: str, depth: int):
 
     for name, header_ in values['headers'].items():
         header = Source()
+        header.name = name
         header.hash = header_['hash']
         header.includes = header_['includes']
 
