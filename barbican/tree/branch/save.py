@@ -11,7 +11,10 @@ def save(branch: Branch, path: str):
 
     sources = {}
     for name, source in branch.sources.items():
-        sources[name] = source.hash
+        sources[name] = {
+            'hash': source.hash,
+            'includes': source.includes    
+        }
 
     branches = {}
     for name, branch_ in branch.branches.items():

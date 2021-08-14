@@ -4,6 +4,7 @@ from tree.branch.branch import Branch
 from tree.branch.source.source import Source
 from tree.branch.source.hash import hash as hash_source
 from tree.branch.hash import hash as hash_branch
+from tree.branch.source.build import build as build_source
 
 def build(path: str, depth: int):
     files = []
@@ -22,15 +23,10 @@ def build(path: str, depth: int):
     source_extensions = ['.hpp', '.hh', '.h', '.cpp', '.cc', '.c']
     for file_name in files:
         name, extension = os.path.splitext(file_name)
-        if not extension or extension not in source_extensions:
+        if extension not in source_extensions:
             continue
 
-        source = Source()
-
-        absolute_path = os.path.join(path, file_name)
-        source.hash = hash_source(absolute_path)
-
-        branch.sources[file_name] = source
+        branch.sources[file_name] = build_source(path, file_name)
 
     new_depth = depth + 1
     for directory in directories:
