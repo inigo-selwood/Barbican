@@ -13,7 +13,7 @@ def print_(branch: Branch, leader: str = ''):
     branch_index = 0
     branch_count = len(branch.branches)
     file_count = len(branch.headers) + len(branch.sources)
-    for branch_ in branch.branches.values():
+    for _, branch_ in sorted(branch.branches.items()):
         extension = ''
         if (branch_index + 1) == branch_count and file_count == 0:
             extension = '    '
@@ -26,7 +26,7 @@ def print_(branch: Branch, leader: str = ''):
         branch_index += 1
 
     file_index = 0
-    for header in branch.headers.values():
+    for _, header in sorted(branch.headers.items()):
         extension = ''
         if (file_index + 1) == file_count:
             extension = '└──'
@@ -36,7 +36,7 @@ def print_(branch: Branch, leader: str = ''):
         print_source(header, f'{leader}{extension}')
         file_index += 1
 
-    for source in branch.sources.values():
+    for _, source in sorted(branch.sources.items()):
         extension = ''
         if (file_index + 1) == file_count:
             extension = '└──'
