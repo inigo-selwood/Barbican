@@ -10,3 +10,4 @@ class Branch:
         self.sources = {}
         self.headers = {}
         self.depth = 0
+        self.dirty = False

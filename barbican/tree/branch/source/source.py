@@ -4,3 +4,4 @@ class Source:
         self.hash = ''
         self.name = ''
         self.includes = []
+        self.dirty = False
