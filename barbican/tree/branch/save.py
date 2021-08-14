@@ -32,6 +32,7 @@ def save(branch: Branch, path: str):
         save(branch_, new_path)
 
     branch_data = {
+        'name': branch.name,
         'path': branch.path,
         'branches': branches,
         'headers': headers,

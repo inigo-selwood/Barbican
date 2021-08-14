@@ -12,6 +12,7 @@ def load(path: str, depth: int):
 
     branch = Branch()
     branch.path = values['path']
+    branch.name = values['name']
     branch.depth = depth
 
     for name, source_ in values['sources'].items():

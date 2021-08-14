@@ -5,6 +5,7 @@ class Branch:
     def __init__(self):
         self.path = ''
         self.hash = ''
+        self.name = ''
         self.branches = {}
         self.sources = {}
         self.headers = {}
