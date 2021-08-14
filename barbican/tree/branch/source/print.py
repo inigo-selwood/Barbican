@@ -1,7 +1,17 @@
 from tree.branch.source.source import Source
+from tree.status.status import Status
 
 def print_(source: Source, leader: str = ''):
-    print(leader, source.name, end='')
+    print(leader, end='')
+
+    if source.status == Status.ADDED:
+        print('+ ', end='')
+    elif source.status == Status.REMOVED:
+        print('- ', end='')
+    elif source.status == Status.ALTERED:
+        print('* ', end='')
+
+    print(source.name, end='')
 
     # if source.dirty:
     #     print(f'\033[31m*\033[0m', end='')

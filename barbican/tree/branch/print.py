@@ -1,9 +1,18 @@
 from tree.branch.source.print import print_ as print_source
 from tree.branch.branch import Branch
+from tree.status.status import Status
 
 def print_(branch: Branch, leader: str = '', starter: str = ''):
 
     print(starter, end='')
+
+    if branch.status == Status.ADDED:
+        print('+ ', end='')
+    elif branch.status == Status.REMOVED:
+        print('- ', end='')
+    elif branch.status == Status.ALTERED:
+        print('* ', end='')
+
     print(branch.name)
 
     branch_index = 0

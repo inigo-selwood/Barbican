@@ -14,8 +14,16 @@ if args.command == 'build':
     tree = build_tree()
     save_tree(tree)
     print_tree(tree)
+
 elif args.command == 'load':
     tree = load_tree()
     print_tree(tree)
+
+elif args.command == 'compare':
+    old_tree = load_tree()
+    new_tree = build_tree()
+    result = compare_tree(old_tree, new_tree)
+    print_tree(result)
+
 else:
     raise Exception(f"unrecognized command: '{args.command}'")

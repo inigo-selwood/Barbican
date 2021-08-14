@@ -1,4 +1,5 @@
 from tree.branch.source.source import Source
+from tree.status.status import Status
 
 class Branch:
 
@@ -9,5 +10,6 @@ class Branch:
         self.branches = {}
         self.sources = {}
         self.headers = {}
+        self.status = Status.UNCHANGED
         self.depth = 0
         self.dirty = False

@@ -1,4 +1,5 @@
-from tree.branch.source.status.status import Status
+from tree.status.status import Status
+
 
 class Source:
 
