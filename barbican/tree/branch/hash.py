@@ -4,10 +4,10 @@ from tree.branch.branch import Branch
 
 def hash(branch: Branch):
     hashes = []
-    for branch_ in branch.branches:
+    for branch_ in branch.branches.values():
         hashes.append(branch_.hash)
-    for source in branch.sources:
-        hashes.append(source.hash)
+    for hash in branch.sources:
+        hashes.append(hash)
     hashes = sorted(hashes)
 
     branch_hash = hashlib.shake_256()

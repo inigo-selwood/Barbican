@@ -16,7 +16,6 @@ def build(path: str, depth: int):
             files.append(name)
 
     branch = Branch()
-    branch.name = os.path.basename(os.path.normpath(path))
     branch.path = path
     branch.depth = depth
 
@@ -27,13 +26,11 @@ def build(path: str, depth: int):
             continue
 
         source = Source()
-        source.name = name
-        source.extension = extension
 
         absolute_path = os.path.join(path, file_name)
         source.hash = hash_source(absolute_path)
 
-        branch.sources.append(source)
+        branch.sources[file_name] = source
 
     new_depth = depth + 1
     for directory in directories:
@@ -41,7 +38,7 @@ def build(path: str, depth: int):
             continue
 
         new_path = os.path.join(path, directory)
-        branch.branches.append(build(new_path, new_depth))
+        branch.branches[directory] = build(new_path, new_depth)
 
     branch.hash = hash_branch(branch)
 

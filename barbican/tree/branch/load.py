@@ -11,24 +11,21 @@ def load(path: str, depth: int):
     values = yaml.safe_load(branch_file)
 
     branch = Branch()
-    branch.name = values['name']
     branch.path = values['path']
     branch.depth = depth
 
     for name, hash in values['sources'].items():
         source = Source()
-        source.name = name
         source.hash = hash
 
-        branch.sources.append(source)
+        branch.sources[name] = source
 
     for name, hash in values['branches'].items():
         absolute_path = os.path.join(path, name)
         branch_ = load(absolute_path, depth + 1)
 
         branch_.hash = hash
-
-        branch.branches.append(branch_)
+        branch.branches[name] = branch_
 
     branch_file.close()
     return branch

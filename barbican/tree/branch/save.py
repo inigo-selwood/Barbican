@@ -10,19 +10,18 @@ def save(branch: Branch, path: str):
         os.mkdir(path)
 
     sources = {}
-    for source in branch.sources:
-        sources[f'{source.name}{source.extension}'] = source.hash
+    for name, source in branch.sources.items():
+        sources[name] = source.hash
 
     branches = {}
-    for branch_ in branch.branches:
-        branches[branch_.name] = branch_.hash
+    for name, branch_ in branch.branches.items():
+        branches[name] = branch_.hash
 
-    for branch_ in branch.branches:
-        new_path = os.path.join(path, branch_.name)
+    for name, branch_ in branch.branches.items():
+        new_path = os.path.join(path, name)
         save(branch_, new_path)
 
     branch_data = {
-        'name': branch.name,
         'path': branch.path,
         'branches': branches,
         'sources': sources

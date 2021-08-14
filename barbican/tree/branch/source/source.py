@@ -1,8 +1,6 @@
 class Source:
 
     def __init__(self):
-        self.name = ''
-        self.extension = ''
         self.hash = ''
 
     def __str__(self):
