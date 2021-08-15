@@ -43,7 +43,7 @@ def save(branch: Branch, path: str):
         'headers': headers,
         'sources': sources
     }
-    
+
     absolute_path = os.path.join(path, '.branch')
     with open(absolute_path, 'w') as branch_file:
         yaml.dump(branch_data, branch_file)

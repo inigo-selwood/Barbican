@@ -84,8 +84,8 @@ def _compare_branches(old: Dict, new: Dict):
 def compare(old: Branch, new: Branch):
     result = new
 
-    # Find which files, branches have changed, and whether those changes warrant
-    # make the branch dirty (ie: neccessitate a rebuild)
+    # Find which files, branches have changed, and whether those changes make
+    # the branch dirty (ie: neccessitate a rebuild)
     headers_dirty, headers = _compare_files(old.headers, new.headers)
     sources_dirty, sources = _compare_files(old.sources, new.sources)
     branches_dirty, branches = _compare_branches(old.branches, new.branches)

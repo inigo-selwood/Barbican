@@ -6,6 +6,7 @@ from typing import Dict
 from tree.branch.source.source import Source
 from tree.branch.branch import Branch
 
+
 def _load_files(values: Dict):
 
     # Create a source object for each entry in the values dict.
