@@ -3,8 +3,6 @@ import os
 from tree.branch.branch import Branch
 from tree.branch.hash import hash as hash_branch
 from tree.branch.source.build import build as build_source
-from tree.branch.source.hash import hash as hash_source
-from tree.branch.source.source import Source
 
 
 def build(path: str, name: str, depth: int):
