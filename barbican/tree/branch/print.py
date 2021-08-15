@@ -5,6 +5,34 @@ from tree.status.status import Status
 
 def print_(branch: Branch, leader: str = '', starter: str = ''):
 
+    """ Prints a branch
+
+    Prints a branch and its children (sources, headers, and sub-branches) in
+    the same style as `tree`. The leader, starter fields are used to help
+    branches print those fancy looking border characters, For example:
+
+    ```
+    .
+    ├── branch
+    │   ├── sub_branch
+    │   │   ├── sub_branch.hpp
+    │   │   └── sub_branch.cpp
+    │   └── branch.hpp
+    └── other_branch
+        ├── other_branch.hpp
+        └── other_branch.cpp
+    ```
+
+    Arguments
+    ---------
+    branch: Branch
+        the branch to print
+    leader: str
+        text to display on the same line as each of the branch's children
+    starter: str
+        text to display directly before the branch itself
+    """
+
     # Print the tree-structure starter, and a little hint to show the branch's
     # status
     print(starter, end='')

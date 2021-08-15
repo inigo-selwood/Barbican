@@ -6,6 +6,32 @@ from tree.branch.branch import Branch
 
 def save(branch: Branch, path: str):
 
+    """ Saves a branch, encoded in yaml
+
+    Serializes the persistent fields of a branch (ignoring things like its
+    build status etc.). For example:
+
+    ``` yaml
+    name: program
+    path: /some-path/another-folder/program
+    branches:
+      a_branch: 643be4cf851ce452
+    headers: {}
+    sources:
+      thing.hpp:
+        hash: 24c898579fb88616
+        includes:
+        - stuff/stuff.hpp
+    ```
+
+    Arguments
+    ---------
+    branch: Branch
+        branch to encode
+    path: str
+        absolute path of filename to save branch to
+    """
+
     # Check the directory exists
     if not os.path.exists(path):
         os.mkdir(path)

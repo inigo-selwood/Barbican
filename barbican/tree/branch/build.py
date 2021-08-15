@@ -7,6 +7,27 @@ from tree.branch.source.build import build as build_source
 
 def build(path: str, name: str, depth: int):
 
+    """ Build a branch from a directory
+
+    Building (as opposed to loading) examines the current file structure, and
+    builds a tree from the files it finds. It's a representation of the current
+    up-to-date codebase
+
+    Arguments
+    ---------
+    path: str
+        the parent directory of the branch
+    name: str
+        the name of the branch's directory
+    depth: int
+        the branch's parent count, relative to the `.barbican` root
+
+    Returns
+    -------
+    source: Source
+        the source built
+    """
+
     # Read the files, directories in the path specified
     files = []
     directories = []
