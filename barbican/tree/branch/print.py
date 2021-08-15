@@ -34,14 +34,22 @@ def print_(branch: Branch, leader: str = '', starter: str = ''):
     # Print header files next
     file_index = 0
     for _, header in sorted(branch.headers.items()):
-        extension = '└── ' if (file_index + 1) == file_count else '├── '
-        print_source(header, f'{leader}{extension}')
+        starter = '├── '
+        extension = '│   '
+        if (file_index + 1) == file_count:
+            starter = '└── '
+            extension = '    '
+        print_source(header, f'{leader}{extension}', f'{leader}{starter}')
         file_index += 1
 
     # Print source files last
     for _, source in sorted(branch.sources.items()):
-        extension = '└── ' if (file_index + 1) == file_count else '├── '
-        print_source(source, f'{leader}{extension}')
+        starter = '├── '
+        extension = '│   '
+        if (file_index + 1) == file_count:
+            starter = '└── '
+            extension = '    '
+        print_source(source, f'{leader}{extension}', f'{leader}{starter}')
         file_index += 1
 
     return ''
