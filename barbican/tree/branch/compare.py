@@ -4,7 +4,23 @@ from tree.branch.branch import Branch
 from tree.status.status import Status
 
 
-def _compare_files(old: Dict, new: Dict):
+def _compare_files(old: Dict, new: Dict) -> Branch:
+
+    """ Compares two file dict's
+
+    Arguments
+    ---------
+    old: Dict
+        the older file dict.
+    new: Dict
+        the newer file dict.
+
+    Returns
+    -------
+    dirty, files: (bool, Dict)
+        a flag indicating whether any of the files had status changes, and
+        the union of the two dictionaries with any changes flagged
+    """
 
     # Create a union dict. with both old and new files
     files = old.copy()
@@ -41,6 +57,22 @@ def _compare_files(old: Dict, new: Dict):
 
 
 def _compare_branches(old: Dict, new: Dict):
+
+    """ Compares two lists of branches
+
+    Arguments
+    ---------
+    old: Dict
+        the older branch list
+    new: Dict
+        the newer branch list
+
+    Returns
+    -------
+    dirty, branches: (bool, Dict)
+        a flag indicating whether any of the branches had status changes, and
+        the union of the two dictionaries with any changes flagged
+    """
 
     # Create a union dict. with both old and new branches
     branches = old.copy()
@@ -82,6 +114,27 @@ def _compare_branches(old: Dict, new: Dict):
 
 
 def compare(old: Branch, new: Branch):
+
+    """ Compares the contents of two branches
+
+    Detects files and branches that have been added, removed, and altered. This
+    informs the selection and ordering of files to be rebuilt
+
+    Arguments
+    ---------
+    old: Branch
+        the older branch; ie: branches present in `old` and not in `new` are
+        considered "deleted"
+    new: Branch
+        the newer branch
+
+    Returns
+    -------
+    difference: Branch
+        A new branch (the union of old, new) with files, branches flagged for
+        status changes
+    """
+
     result = new
 
     # Find which files, branches have changed, and whether those changes make

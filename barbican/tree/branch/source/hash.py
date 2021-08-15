@@ -3,6 +3,19 @@ import hashlib
 
 def hash(file: str) -> str:
 
+    """ Hash the contents of a file
+
+    Arguments
+    ---------
+    file: str
+        the absolute path of the file to hash
+
+    Returns
+    -------
+    hash: str
+        the hash generated (16 hexadecimal characters long)
+    """
+
     # Limits the number of bytes that are read at once
     BLOCK_SIZE = 65536
 

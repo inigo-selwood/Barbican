@@ -4,6 +4,21 @@ from tree.status.status import Status
 
 def print_(source: Source, leader: str = '', starter: str = ''):
 
+    """ Prints a source object
+
+    Uses leader, starter arguments to properly indent and format the source and
+    any other fields (dependencies etc.). 
+
+    Arguments
+    ---------
+    source: Source
+        the source object to print
+    leader: str
+        text to print for subsequent fields
+    starter:
+        text to print before the source name
+    """
+
     # Print tree structure leader, and an optional hint that indicates status
     print(starter, end='')
     if source.status == Status.ADDED:
