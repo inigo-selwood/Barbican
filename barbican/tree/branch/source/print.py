@@ -7,7 +7,11 @@ def print_(source: Source, leader: str = '', starter: str = ''):
     """ Prints a source object
 
     Uses leader, starter arguments to properly indent and format the source and
+<<<<<<< HEAD
     any other fields (dependencies etc.).
+=======
+    any other fields (dependencies etc.). 
+>>>>>>> 5e95c2e0f458196af83d54960d64442032d7d2c5
 
     Arguments
     ---------
