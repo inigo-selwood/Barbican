@@ -27,5 +27,7 @@ def command(target: str = None):
         return 1
 
     tree = load_tree(base, '.')
-    index_tree(tree, base)
+    if not index_tree(tree, base):
+        return 1
+
     display_tree(tree)
