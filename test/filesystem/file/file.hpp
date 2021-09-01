@@ -15,10 +15,10 @@ public:
 
     friend std::ostream &operator<<(std::ostream &stream, const File &file);
 
-    File(const std::string &file);
+    File(const std::string &path, Directory *directory);
 
     void display(std::ostream &stream,
             const std::string &leader,
-            const std::string &starter) const;
+            const bool &final) const;
 
 };

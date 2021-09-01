@@ -21,13 +21,11 @@ public:
     friend std::ostream &operator<<(std::ostream &stream,
             const Directory &directory);
 
-    Directory(const std::string &name,
-            const std::vector<Directory> &directories,
-            const std::vector<File> &files,
-            Directory *directory);
+    Directory(const std::string &path, Directory *directory);
 
     void display(std::ostream &stream,
             const std::string &leader,
-            const std::string &starter) const;
+            const bool &final,
+            const bool &root) const;
 
 };

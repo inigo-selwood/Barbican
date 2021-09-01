@@ -1,5 +1,9 @@
+#include <iostream>
+#include <filesystem>
+
 #include "filesystem/filesystem.hpp"
 
 int main() {
-    return 0;
+    Directory root = Directory(std::filesystem::current_path(), nullptr);
+    std::cout << root << '\n';
 }
