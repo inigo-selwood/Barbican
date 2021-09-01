@@ -36,6 +36,8 @@ def index(file: File, root: str) -> bool:
 
             header_base = get_source_route(header.parent)
             route = os.path.relpath(file_path, start=header_base)
-            header.attributes['sources'][route] = file
+
+            if header_base == file_base:
+                header.attributes['sources'][route] = file
 
     return True

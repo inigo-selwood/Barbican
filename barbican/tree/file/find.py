@@ -18,16 +18,18 @@ def find(route: str, branch: Branch):
     token, new_route = _get_token(route)
 
     if not new_route:
-        if token not in branch.headers:
+        if token in branch.headers:
+            return branch.headers[token]
+        elif token in branch.sources:
+            return branch.sources[token]
+        else:
             return None
-
-        return branch.headers[token]
 
     elif token == '.':
         return find(new_route, branch)
 
     elif token == '..':
-        if not token.parent:
+        if not branch.parent:
             return None
 
         return find(new_route, branch.parent)
