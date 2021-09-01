@@ -44,7 +44,6 @@ async def _build_source(file: File, root: str):
         '-std=c++17'
     ]
     command.extend(flags)
-    command.append(f'# {file.name}')
 
     print(' '.join(command))
     process = await asyncio.create_subprocess_shell(' '.join(command),

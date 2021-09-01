@@ -1,17 +1,17 @@
-import os
+import sys
 import hashlib
-
-from datetime import datetime
 
 
 def hash_file(path: str):
-    status = os.lstat(path)
-    modified = datetime.fromtimestamp(status.st_mtime)
-    size = status.st_size
+    
+    BUFFER_SIZE = 65536
+    context = hashlib.shake_256()
+    with open(path, 'rb') as file:
+        while True:
+            data = file.read(BUFFER_SIZE)
+            if not data:
+                break
 
-    context = hashlib.shake_128()
-    context.update(bytes(size))
-    context.update(modified.__str__().encode())
+            context.update(data)
 
-    hash = context.hexdigest(5)
-    return hash
+    return context.hexdigest(5)
