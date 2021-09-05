@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <img src="https://github.com/inigo-selwood/Barbican/actions/workflows/lint.yaml/badge.svg?branch=go-implementation" alt="Lint test">
+    <img src="https://github.com/inigo-selwood/Barbican/actions/workflows/lint.yaml/badge.svg?branch=master" alt="Lint test">
 </p>
 
 ---
