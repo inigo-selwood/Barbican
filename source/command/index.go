@@ -2,12 +2,32 @@ package command
 
 import (
 	"fmt"
+	"log"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
+
+	"github.com/inigo-selwood/barbican/tree/header"
+	"github.com/inigo-selwood/barbican/tree/root"
 )
 
 func index(command *cobra.Command, arguments []string) {
-	fmt.Println("barbican: indexing")
+	targetPath := arguments[0]
+	targetDirectory := filepath.Dir(targetPath)
+	contextBase, contextBaseError := root.Find(targetDirectory)
+	if contextBaseError != nil {
+		log.Fatal("couldn't find context")
+	}
+
+	targetRoute, routeError := filepath.Rel(contextBase, targetDirectory)
+	if routeError != nil {
+		log.Fatal("couldn't resolve target path within context")
+	}
+
+	targetName := filepath.Base(targetPath)
+	target := header.Load(targetName, targetRoute, targetDirectory)
+
+	fmt.Printf("barbican: indexed '%s'\n", target.Name)
 }
 
 var indexCommand = &cobra.Command{
