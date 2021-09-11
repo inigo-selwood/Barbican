@@ -1,4 +1,4 @@
-package root
+package tree
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-func Find(base string) (string, error) {
+func FindRoot(base string) (string, error) {
 	for {
 		root := path.Join(base, ".barbican")
 		if _, err := os.Stat(root); os.IsNotExist(err) == false {
