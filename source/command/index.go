@@ -22,6 +22,5 @@ var indexCommand = &cobra.Command{
 }
 
 func init() {
-	indexCommand.Flags().StringP("target", "t", "", "target to index")
 	rootCommand.AddCommand(indexCommand)
 }

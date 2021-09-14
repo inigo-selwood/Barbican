@@ -1,12 +1,12 @@
 package tree
 
 import (
-    "io"
-    "path"
+	"io"
+	"path"
 
-    "path/filepath"
-    "crypto/sha256"
-    "encoding/hex"
+	"crypto/sha256"
+	"encoding/hex"
+	"path/filepath"
 )
 
 func HashRoute(realRoute string) string {

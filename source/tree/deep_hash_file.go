@@ -19,5 +19,5 @@ func DeepHashFile(filePath string) string {
 		log.Fatal(readError)
 	}
 
-    return string(hash.Sum(nil)[:10])
+	return string(hash.Sum(nil)[:10])
 }
