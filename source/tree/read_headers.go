@@ -1,11 +1,11 @@
 package tree
 
 import (
-    "regexp"
-    "log"
-    "strings"
+	"log"
+	"regexp"
+	"strings"
 
-    "io/ioutil"
+	"io/ioutil"
 )
 
 func ReadHeaders(filePath string) []string {
