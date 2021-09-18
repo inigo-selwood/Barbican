@@ -7,8 +7,14 @@ import (
 
 type Branch struct {
 	Name string
+	Hash string
+
+	RealRoute string
+	HashRoute string
 
 	Size int64
+
+	Parent *Branch
 
 	Headers map[string]*header.Header
 	Sources map[string]*source.Source

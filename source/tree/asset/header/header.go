@@ -8,6 +8,8 @@ type Header struct {
 
 	Size int64
 
-	Headers map[string]*asset.Asset
-	Sources map[string]*asset.Asset
+	Dirty bool
+
+	Headers map[string]asset.Asset
+	Sources map[string]asset.Asset
 }
