@@ -7,6 +7,8 @@ import (
 )
 
 func indexHeader(headerInstance *header.Header, parent *Branch, root string) error {
+
+    // Emplace a pointer for each header
     for headerRoute, _ := range headerInstance.Headers {
         _, instance, findError := Find(headerRoute, parent)
         if findError != nil {
@@ -20,6 +22,8 @@ func indexHeader(headerInstance *header.Header, parent *Branch, root string) err
 }
 
 func indexSource(sourceInstance *source.Source, parent *Branch, root string) error {
+
+    // Emplace a pointer for each header (linking implementation sources)
     for headerRoute, _ := range sourceInstance.Headers {
         instanceBranch, instance, findError := Find(headerRoute, parent)
         if findError != nil {
@@ -36,6 +40,8 @@ func indexSource(sourceInstance *source.Source, parent *Branch, root string) err
 }
 
 func Index(branchInstance *Branch, root string) error {
+
+    // Index headers
     for _, headerInstance := range branchInstance.Headers {
         indexError := indexHeader(headerInstance, branchInstance, root)
         if indexError != nil {
@@ -43,6 +49,7 @@ func Index(branchInstance *Branch, root string) error {
         }
     }
 
+    // Index sources
     for _, sourceInstance := range branchInstance.Sources {
         indexError := indexSource(sourceInstance, branchInstance, root)
         if indexError != nil {
@@ -50,6 +57,7 @@ func Index(branchInstance *Branch, root string) error {
         }
     }
 
+    // Index child branches
     for _, childBranch := range branchInstance.Branches {
         indexError := Index(childBranch, root)
         if indexError != nil {

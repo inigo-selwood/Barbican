@@ -3,6 +3,8 @@ package source
 import "fmt"
 
 func Display(instance *Source, leader string, final bool) {
+
+	// Evaluate starter
 	starter := ""
 	if final {
 		starter = "╰─ "
@@ -10,8 +12,10 @@ func Display(instance *Source, leader string, final bool) {
 		starter = "├─ "
 	}
 
+	// Print source name
 	fmt.Printf("%s%s%s\n", leader, starter, instance.Name)
 
+	// Print headers
 	for headerName, _ := range instance.Headers {
 		newLeader := ""
 		if final {

@@ -14,6 +14,8 @@ import (
 )
 
 func load(command *cobra.Command, arguments []string) {
+
+	// Evaluate base directory for build context
 	workingDirectory, directoryError := os.Getwd()
 	if directoryError != nil {
 		log.Fatal(directoryError)
@@ -38,6 +40,7 @@ func load(command *cobra.Command, arguments []string) {
 		log.Fatal(contextError)
 	}
 
+	// Create tree from build context
 	root, rootError := branch.Load(".", context, nil)
 	if rootError != nil {
 		log.Fatal(rootError)

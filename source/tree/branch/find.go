@@ -9,11 +9,14 @@ import (
 )
 
 func trim(route string) (string, string) {
+
+    // Get the index of the first slash
     endIndex := strings.Index(route, "/")
     if endIndex == -1 {
         return route, ""
     }
 
+    // Split the route into a token and a remaining route
     token := route[:endIndex]
     newRoute := route[(endIndex + 1):]
 

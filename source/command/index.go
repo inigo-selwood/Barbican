@@ -13,6 +13,8 @@ import (
 )
 
 func index(command *cobra.Command, arguments []string) {
+
+	// Evaluate target path, directory, and name
 	targetPath := arguments[0]
 	targetName := filepath.Base(targetPath)
 	targetBase := filepath.Dir(targetPath)
@@ -27,16 +29,17 @@ func index(command *cobra.Command, arguments []string) {
 		log.Fatal(contextError)
 	}
 
+	// Load context as tree
 	root, rootError := branch.Load(".", contextPath, nil)
 	if rootError != nil {
 		log.Fatal(rootError)
 	}
 
+	// Index and print tree
 	indexError := branch.Index(root, contextPath)
 	if indexError != nil {
 		log.Fatal(indexError)
 	}
-
 	branch.Display(root, "", true, true)
 
 	fmt.Printf("barbican: indexed '%s'\n", targetName)

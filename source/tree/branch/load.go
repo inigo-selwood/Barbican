@@ -29,6 +29,7 @@ func Load(name string, root string, parent *Branch) (*Branch, error) {
 		Branches:  make(map[string]*Branch),
 	}
 
+	// Evaluate the branch path, route, and name
 	var relativePath string
 	if parent != nil {
 		relativePath = filepath.Join(root, parent.RealRoute, name)
@@ -47,15 +48,18 @@ func Load(name string, root string, parent *Branch) (*Branch, error) {
 		return nil, routeError
 	}
 
+	// Read entries in the branch
 	entries, entriesError := ioutil.ReadDir(branchPath)
 	if entriesError != nil {
 		log.Fatal(entriesError)
 	}
 
+	// Handle headers, sources, and child branches
 	var entryHashes []string
 	for _, entry := range entries {
 		entryName := entry.Name()
 
+		// Create sub-branches
 		if entry.Mode().IsDir() {
 			if entryName == ".barbican" {
 				continue
@@ -73,8 +77,9 @@ func Load(name string, root string, parent *Branch) (*Branch, error) {
 			branch.Branches[entryName] = newBranch
 
 		} else if entry.Mode().IsRegular() {
-
 			assetExtension := filepath.Ext(entryName)
+
+			// Process header files
 			if assetExtension == ".hpp" {
 				instance, headerError := header.Load(entryName,
 						branch.RealRoute,
@@ -87,6 +92,7 @@ func Load(name string, root string, parent *Branch) (*Branch, error) {
 				branch.Size += instance.Size
 				branch.Headers[entryName] = instance
 
+			// Process source files
 			} else if assetExtension == ".cpp" {
 				instance, sourceError := source.Load(entryName,
 						branch.RealRoute,
@@ -102,18 +108,21 @@ func Load(name string, root string, parent *Branch) (*Branch, error) {
 		}
 	}
 
+	// Create a hash from the entries in the branch
 	hashContext := sha256.New()
 	for _, entryHash := range entryHashes {
 		io.WriteString(hashContext, entryHash)
 	}
 	branch.Hash = hex.EncodeToString(hashContext.Sum(nil))[:10]
 
+	// Evaluate the new hashed route
 	if parent != nil {
 		branch.HashRoute = filepath.Join(parent.HashRoute, branch.Hash)
 	} else {
 		branch.HashRoute = branch.Hash
 	}
 
+	// Mark new/changed headers
 	for _, headerInstance := range branch.Headers {
 	    buildName := fmt.Sprintf("%s.o", headerInstance.Hash)
 	    hashPath := filepath.Join(root, branch.HashRoute, buildName)
@@ -124,6 +133,7 @@ func Load(name string, root string, parent *Branch) (*Branch, error) {
 	    }
 	}
 
+	// Mark new/changed sources
 	for _, sourceInstance := range branch.Sources {
 	    buildName := fmt.Sprintf("%s.o", sourceInstance.Hash)
 	    hashPath := filepath.Join(root, branch.HashRoute, buildName)
