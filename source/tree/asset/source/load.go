@@ -21,7 +21,7 @@ func Load(name string, route string, root string) (*Source, error) {
 		return nil, statusError
 	}
 
-	headers := make(map[string]*asset.Asset)
+	headers := make(map[string]asset.Asset)
 	headerNames := tree.ReadHeaders(sourcePath)
 	for _, headerName := range headerNames {
 		headers[headerName] = nil

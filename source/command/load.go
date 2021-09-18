@@ -15,7 +15,6 @@ import (
 
 func load(command *cobra.Command, arguments []string) {
 	workingDirectory, directoryError := os.Getwd()
-
 	if directoryError != nil {
 		log.Fatal(directoryError)
 	}
@@ -39,7 +38,7 @@ func load(command *cobra.Command, arguments []string) {
 		log.Fatal(contextError)
 	}
 
-	root, rootError := branch.Load(".", ".", context)
+	root, rootError := branch.Load(".", ".", context, nil)
 	if rootError != nil {
 		log.Fatal(rootError)
 	}

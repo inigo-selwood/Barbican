@@ -1,6 +1,11 @@
 package branch
 
 import (
+	"io"
+
+	"crypto/sha256"
+	"encoding/hex"
+
 	"log"
 	"io/ioutil"
 	"path/filepath"
@@ -9,7 +14,11 @@ import (
 	"github.com/inigo-selwood/barbican/tree/asset/source"
 )
 
-func Load(name string, route string, root string) (*Branch, error) {
+func Load(name string,
+		route string,
+		root string,
+		parent *Branch) (*Branch, error) {
+
 	relativePath := filepath.Join(root, route, name)
 	branchPath, pathError := filepath.Abs(relativePath)
 	if pathError != nil {
@@ -26,21 +35,31 @@ func Load(name string, route string, root string) (*Branch, error) {
 		log.Fatal(entriesError)
 	}
 
-	var size int64 = 0
-	branches := make(map[string]*Branch)
-	headers := make(map[string]*header.Header)
-	sources := make(map[string]*source.Source)
+	branch := Branch{
+		Name:     name,
+		Hash:     "",
+		Size:     0,
+		Headers:  make(map[string]*header.Header),
+		Sources:  make(map[string]*source.Source),
+		Branches: make(map[string]*Branch),
+	}
+
+	var entryHashes []string
 	for _, entry := range entries {
 		entryName := entry.Name()
 
 		if entry.Mode().IsDir() {
-			newBranch, branchError := Load(entryName, branchRoute, root)
+			newBranch, branchError := Load(entryName,
+					branchRoute,
+					root,
+					&branch)
 			if branchError != nil {
 				return nil, branchError
 			}
 
-			size += newBranch.Size
-			branches[entryName] = newBranch
+			entryHashes = append(entryHashes, newBranch.Hash)
+			branch.Size += newBranch.Size
+			branch.Branches[entryName] = newBranch
 		} else if entry.Mode().IsRegular() {
 
 			assetExtension := filepath.Ext(entryName)
@@ -52,8 +71,9 @@ func Load(name string, route string, root string) (*Branch, error) {
 					return nil, headerError
 				}
 
-				size += instance.Size
-				headers[entryName] = instance
+				entryHashes = append(entryHashes, instance.Hash)
+				branch.Size += instance.Size
+				branch.Headers[entryName] = instance
 			} else if assetExtension == ".cpp" {
 				instance, sourceError := source.Load(entryName,
 						branchRoute,
@@ -62,19 +82,18 @@ func Load(name string, route string, root string) (*Branch, error) {
 					return nil, sourceError
 				}
 
-				size += instance.Size
-				sources[entryName] = instance
+				entryHashes = append(entryHashes, instance.Hash)
+				branch.Size += instance.Size
+				branch.Sources[entryName] = instance
 			}
 		}
 	}
 
-	branch := Branch{
-		Name:     name,
-		Size:     size,
-		Headers:  headers,
-		Sources:  sources,
-		Branches: branches,
+	hashContext := sha256.New()
+	for _, entryHash := range entryHashes {
+		io.WriteString(hashContext, entryHash)
 	}
+	branch.Hash = hex.EncodeToString(hashContext.Sum(nil))[:10]
 
 	return &branch, nil
 }

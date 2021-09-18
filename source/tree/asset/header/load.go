@@ -21,7 +21,7 @@ func Load(name string, route string, root string) (*Header, error) {
 		return nil, statusError
 	}
 
-	headers := make(map[string]*asset.Asset)
+	headers := make(map[string]asset.Asset)
 	headerNames := tree.ReadHeaders(headerPath)
 	for _, headerName := range headerNames {
 		headers[headerName] = nil
@@ -32,7 +32,7 @@ func Load(name string, route string, root string) (*Header, error) {
 		Hash:    tree.DeepHashFile(headerPath),
 		Size:    headerStatus.Size(),
 		Headers: headers,
-		Sources: make(map[string]*asset.Asset),
+		Sources: make(map[string]asset.Asset),
 	}
 
 	return &header, nil

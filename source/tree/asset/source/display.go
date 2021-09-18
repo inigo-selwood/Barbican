@@ -20,6 +20,6 @@ func Display(instance *Source, leader string, final bool) {
 			newLeader = leader + "│  "
 		}
 
-		fmt.Printf("%s→ %s\n", newLeader, headerName)
+		fmt.Printf("%s\u001b[36m→\u001b[0m %s\n", newLeader, headerName)
 	}
 }

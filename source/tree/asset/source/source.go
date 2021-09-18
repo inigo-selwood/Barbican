@@ -8,5 +8,5 @@ type Source struct {
 
 	Size int64
 
-	Headers map[string]*asset.Asset
+	Headers map[string]asset.Asset
 }
