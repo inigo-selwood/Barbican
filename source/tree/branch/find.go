@@ -20,9 +20,9 @@ func trim(route string) (string, string) {
     return token, newRoute
 }
 
-func Find(route string, context *Branch) (*header.Header, error) {
+func Find(route string, context *Branch) (*Branch, *header.Header, error) {
     if context == nil {
-        return nil, errors.New("nil context")
+        return nil, nil, errors.New("nil context")
     }
 
     token, newRoute := trim(route)
@@ -35,13 +35,17 @@ func Find(route string, context *Branch) (*header.Header, error) {
             error := fmt.Errorf("no such header '%s' in '%s'",
                     token,
                     context.Name)
-            return nil, error
+            return nil, nil, error
         }
 
-        return header, nil
+        return context, header, nil
 
     // Handle arent-routing tokens
     } else if token == ".." {
+        if context.Parent == nil {
+            return nil, nil, errors.New("import outside context requested")
+        }
+
         return Find(newRoute, context.Parent)
 
     // Handle self-routing tokens
@@ -55,7 +59,7 @@ func Find(route string, context *Branch) (*header.Header, error) {
         error := fmt.Errorf("no such branch '%s' in '%s'",
                 token,
                 context.Name)
-        return nil, error
+        return nil, nil, error
     }
 
     return Find(newRoute, newContext)

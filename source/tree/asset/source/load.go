@@ -9,8 +9,8 @@ import (
 	"github.com/inigo-selwood/barbican/tree/asset"
 )
 
-func Load(name string, route string, root string) (*Source, error) {
-	relativePath := filepath.Join(root, route, name)
+func Load(name string, realRoute string, root string) (*Source, error) {
+	relativePath := filepath.Join(root, realRoute, name)
 	sourcePath, pathError := filepath.Abs(relativePath)
 	if pathError != nil {
 		return nil, pathError

@@ -9,6 +9,9 @@ type Branch struct {
 	Name string
 	Hash string
 
+	RealRoute string
+	HashRoute string
+
 	Size int64
 
 	Parent *Branch

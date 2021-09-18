@@ -38,7 +38,7 @@ func load(command *cobra.Command, arguments []string) {
 		log.Fatal(contextError)
 	}
 
-	root, rootError := branch.Load(".", ".", context, nil)
+	root, rootError := branch.Load(".", context, nil)
 	if rootError != nil {
 		log.Fatal(rootError)
 	}

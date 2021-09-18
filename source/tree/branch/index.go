@@ -1,59 +1,60 @@
 package branch
 
 import (
-    // "path/filepath"
-
     "github.com/inigo-selwood/barbican/tree/asset"
     "github.com/inigo-selwood/barbican/tree/asset/header"
     "github.com/inigo-selwood/barbican/tree/asset/source"
 )
 
-func indexHeader(headerInstance *header.Header, parent *Branch) error {
+func indexHeader(headerInstance *header.Header, parent *Branch, root string) error {
     for headerRoute, _ := range headerInstance.Headers {
-        header, findError := Find(headerRoute, parent)
+        _, instance, findError := Find(headerRoute, parent)
         if findError != nil {
             return findError
         }
 
-        headerInstance.Headers[headerRoute] = asset.Asset(header)
+        headerInstance.Headers[headerRoute] = asset.Asset(instance)
     }
 
     return nil
 }
 
-func indexSource(sourceInstance *source.Source, parent *Branch) error {
+func indexSource(sourceInstance *source.Source, parent *Branch, root string) error {
     for headerRoute, _ := range sourceInstance.Headers {
-        header, findError := Find(headerRoute, parent)
+        instanceBranch, instance, findError := Find(headerRoute, parent)
         if findError != nil {
             return findError
         }
 
-        header.Sources[sourceInstance.Name] = asset.Asset(sourceInstance)
-        sourceInstance.Headers[headerRoute] = asset.Asset(header)
+        sourceInstance.Headers[headerRoute] = asset.Asset(instance)
+        if instanceBranch == parent {
+            instance.Sources[sourceInstance.Name] = asset.Asset(sourceInstance)
+        }
     }
 
     return nil
 }
 
 func Index(branchInstance *Branch, root string) error {
-
-
     for _, headerInstance := range branchInstance.Headers {
-        indexError := indexHeader(headerInstance, branchInstance)
+        indexError := indexHeader(headerInstance, branchInstance, root)
         if indexError != nil {
             return indexError
         }
     }
 
     for _, sourceInstance := range branchInstance.Sources {
-        indexError := indexSource(sourceInstance, branchInstance)
+        indexError := indexSource(sourceInstance, branchInstance, root)
         if indexError != nil {
             return indexError
         }
     }
 
     for _, childBranch := range branchInstance.Branches {
-        Index(childBranch, root)
+        indexError := Index(childBranch, root)
+        if indexError != nil {
+            return indexError
+        }
     }
 
     return nil

@@ -27,7 +27,7 @@ func index(command *cobra.Command, arguments []string) {
 		log.Fatal(contextError)
 	}
 
-	root, rootError := branch.Load(".", ".", contextPath, nil)
+	root, rootError := branch.Load(".", contextPath, nil)
 	if rootError != nil {
 		log.Fatal(rootError)
 	}
