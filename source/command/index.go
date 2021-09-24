@@ -2,7 +2,7 @@ package command
 
 import (
 	"log"
-	"fmt"
+	"errors"
 
 	"path/filepath"
 
@@ -16,33 +16,34 @@ func index(command *cobra.Command, arguments []string) {
 
 	// Evaluate target path, directory, and name
 	targetPath := arguments[0]
-	targetName := filepath.Base(targetPath)
 	targetBase := filepath.Dir(targetPath)
 
 	targetDirectory, baseError := filepath.Abs(targetBase)
 	if baseError != nil {
+		baseError := errors.New("barbican: couldn't evaluate base path")
 		log.Fatal(baseError)
 	}
 
 	contextPath, contextError := tree.FindRoot(targetDirectory)
 	if contextError != nil {
-		log.Fatal(contextError)
+		rootError := errors.New("barbican: couldn't find context")
+		log.Fatal(rootError)
 	}
 
 	// Load context as tree
 	root, rootError := branch.Load(".", contextPath, nil)
 	if rootError != nil {
-		log.Fatal(rootError)
+		loadError := errors.New("barbican: couldn't load build tree")
+		log.Fatal(loadError)
 	}
 
 	// Index and print tree
 	indexError := branch.Index(root, contextPath)
 	if indexError != nil {
-		log.Fatal(indexError)
+		linkError := errors.New("barbican: couldn't index build tree")
+		log.Fatal(linkError)
 	}
 	branch.Display(root, "", true, true)
-
-	fmt.Printf("barbican: indexed '%s'\n", targetName)
 }
 
 var indexCommand = &cobra.Command{

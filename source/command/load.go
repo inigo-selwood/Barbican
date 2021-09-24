@@ -1,9 +1,9 @@
 package command
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"errors"
 
 	"path/filepath"
 
@@ -18,7 +18,8 @@ func load(command *cobra.Command, arguments []string) {
 	// Evaluate base directory for build context
 	workingDirectory, directoryError := os.Getwd()
 	if directoryError != nil {
-		log.Fatal(directoryError)
+		baseError := errors.New("barbican: couldn't evaluate working directory")
+		log.Fatal(baseError)
 	}
 
 	var baseDirectory string
@@ -29,7 +30,8 @@ func load(command *cobra.Command, arguments []string) {
 		var baseError error
 		baseDirectory, baseError = filepath.Abs(basePath)
 		if baseError != nil {
-			log.Fatal(baseError)
+			absoluteError := errors.New("barbican: couldn't evaluate base path")
+			log.Fatal(absoluteError)
 		}
 	} else {
 		baseDirectory = workingDirectory
@@ -37,16 +39,17 @@ func load(command *cobra.Command, arguments []string) {
 
 	context, contextError := tree.FindRoot(baseDirectory)
 	if contextError != nil {
+		contextError := errors.New("barbican: couldn't find context")
 		log.Fatal(contextError)
 	}
 
 	// Create tree from build context
 	root, rootError := branch.Load(".", context, nil)
 	if rootError != nil {
-		log.Fatal(rootError)
+		loadError := errors.New("failed to load tree")
+		log.Fatal(loadError)
 	}
-
-	fmt.Printf("barbican: loaded context (%d bytes)\n", root.Size)
+	branch.Display(root, "", true, true)
 }
 
 var loadCommand = &cobra.Command{
