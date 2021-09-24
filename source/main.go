@@ -1,7 +1,14 @@
 package main
 
-import "github.com/inigo-selwood/barbican/command"
+import (
+	"os"
+
+	"github.com/inigo-selwood/barbican/command"
+)
 
 func main() {
-	command.Execute()
+	executionError := command.Execute()
+    if executionError != nil {
+        os.Exit(1)
+    }
 }
