@@ -10,8 +10,8 @@ var rootCommand = &cobra.Command{
 	Long:  "Simple, parallel build manager for binaries and static libraries",
 }
 
-func Execute() {
-	cobra.CheckErr(rootCommand.Execute())
+func Execute() error {
+	return rootCommand.Execute()
 }
 
 func init() {
