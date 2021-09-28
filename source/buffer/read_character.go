@@ -1,13 +1,12 @@
 package buffer
 
-func ReadCharacter(context *Buffer, character rune) bool {
+// Reads the character at the buffer's current position, incrementing
+func ReadCharacter(context *Buffer) rune {
     if context.Index == context.Length {
-        return false
+        return 0
     }
 
-    var result bool = context.Text[context.Index] == byte(character)
-    if result {
-        context.Index += 1
-    }
+    result := rune(context.Text[context.Index])
+    context.Index += 1
     return result
 }

@@ -1,9 +1,12 @@
 package buffer
 
-func PeekCharacter(context *Buffer, character rune) bool {
+// Looks at the next character in the buffer without incrementing
+func PeekCharacter(context *Buffer) rune {
     if context.Index == context.Length {
-        return false
+        return 0
     }
 
-    return context.Text[context.Index] == byte(character)
+    result := rune(context.Text[context.Index])
+    context.Index += 1
+    return result
 }
