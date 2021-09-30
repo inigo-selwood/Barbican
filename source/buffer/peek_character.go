@@ -6,7 +6,5 @@ func PeekCharacter(context *Buffer) rune {
         return 0
     }
 
-    result := rune(context.Text[context.Index])
-    context.Index += 1
-    return result
+    return rune(context.Text[context.Index])
 }
